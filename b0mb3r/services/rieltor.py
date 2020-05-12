@@ -2,7 +2,7 @@ from service import Service
 
 
 class Rieltor(Service):
-    phone_codes = ["380"]
+    phone_codes = [380]
 
     async def run(self):
         await self.post(

@@ -2,6 +2,8 @@ from service import Service
 
 
 class Helsi(Service):
+    phone_codes = [380]
+
     async def run(self):
         await self.post(
             "https://helsi.me/api/healthy/accounts/login",

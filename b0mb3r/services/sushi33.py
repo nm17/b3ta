@@ -2,7 +2,7 @@ from service import Service
 
 
 class Sushi33(Service):
-    phone_codes = ["380"]
+    phone_codes = [380]
 
     async def run(self):
         await self.get(

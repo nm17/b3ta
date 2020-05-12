@@ -5,7 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from b0mb3r.app.routers import attack, index
+from b0mb3r.app.routers import attack, services, index
 
 app = FastAPI()
 
@@ -16,4 +16,5 @@ app.add_middleware(
 app.mount("/static", StaticFiles(directory=join(os.getcwd(), "app", "static")), name="static")
 
 app.include_router(attack.router, prefix="/attack")
+app.include_router(services.router, prefix="/services")
 app.include_router(index.router)

@@ -2,7 +2,7 @@ from service import Service
 
 
 class TaxiRitm(Service):
-    phone_codes = ["7"]
+    phone_codes = [7]
 
     async def run(self):
         await self.post(

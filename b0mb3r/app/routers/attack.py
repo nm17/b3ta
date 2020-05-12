@@ -1,10 +1,10 @@
+import asyncio
 import re
 import uuid
 
 import phonenumbers
 from fastapi import APIRouter, HTTPException
 from loguru import logger
-from starlette.background import BackgroundTasks
 
 from b0mb3r.app.models import AttackModel, StatusModel
 from b0mb3r.app.status import status
@@ -15,15 +15,15 @@ router = APIRouter()
 
 @logger.catch
 @router.post("/start")
-async def start_attack(background_tasks: BackgroundTasks, attack: AttackModel = AttackModel):
+async def start_attack(attack: AttackModel = AttackModel):
     only_digits_phone = re.sub("[^0-9]", "", attack.phone)
     country_code = phonenumbers.parse(f"+{only_digits_phone}").country_code
 
     attack_id = uuid.uuid4().hex
     status[attack_id] = {"started_at": None, "currently_at": None, "end_at": None}
 
-    background_tasks.add_task(
-        perform_attack, attack_id, attack.number_of_cycles, country_code, only_digits_phone
+    asyncio.create_task(
+        perform_attack(attack_id, attack.number_of_cycles, country_code, only_digits_phone)
     )
 
     return {"success": True, "id": attack_id}

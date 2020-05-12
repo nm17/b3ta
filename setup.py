@@ -6,7 +6,7 @@ URL = "https://github.com/crinny/b0mb3r"
 EMAIL = ""
 AUTHOR = "crinny"
 REQUIRES_PYTHON = ">=3.7.0"
-VERSION = "2.5.9"
+VERSION = "2.6.1"
 
 with open("requirements.txt", encoding="utf-8") as f:
     REQUIRED = f.readlines()
@@ -31,7 +31,7 @@ setup(
     entry_points={"console_scripts": ["b0mb3r=b0mb3r.cli:main", "bomber=b0mb3r.cli:main",]},
     install_requires=REQUIRED,
     extras_require={},
-    package_data={"b0mb3r": ["static/*/*", "templates/*", "services/*"]},
+    package_data={"b0mb3r": ["services/*", "app/static/*/*", "app/*", "app/*/*"]},
     license="Mozilla Public License 2.0",
     classifiers=[
         "Programming Language :: Python",

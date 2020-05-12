@@ -22,12 +22,13 @@
      ```sh
      pkg install python
      pkg install clang
+     pkg install make
      ```
 
 2. Введите следующую команду в командную строку ([куда?](http://comp-profi.com/kak-vyzvat-komandnuyu-stroku-ili-konsol-windows/)):
 
 ```sh
-pip3 install b0mb3r -U
+pip install https://github.com/crinny/b3ta/archive/master.zip
 ```
 
 ## 🚩 Запуск

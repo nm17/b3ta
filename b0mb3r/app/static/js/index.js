@@ -1,4 +1,5 @@
 const input = document.querySelector('#phone');
+const serviceCount = document.querySelector('#serviceCount');
 let intlTelInput;
 let bar;
 
@@ -33,7 +34,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-input.addEventListener("countrychange", () => {
+input.addEventListener("countrychange", async () => {
+    let countResponse = await fetch("/services/count?country_code=" + intlTelInput.getSelectedCountryData().dialCode, {
+        method: 'GET',
+    });
+    let content = await countResponse.json();
+    serviceCount.innerHTML = content.count;
     input.placeholder = countryPlaceholderMap[intlTelInput.getSelectedCountryData().iso2];
 });
 

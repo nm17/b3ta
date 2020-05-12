@@ -2,8 +2,10 @@ import random
 import re
 import string
 from abc import ABC, abstractmethod
+from typing import Callable
 
 import httpx
+from loguru import logger
 
 
 class Service(ABC):
@@ -29,9 +31,23 @@ class Service(ABC):
         )
         self.email = self.username + "@gmail.com"
 
-        self.get = self.client.get
-        self.post = self.client.post
-        self.options = self.client.options
+    async def get(self, *args, **kwargs):
+        return await self.request_logger(self.client.get, *args, **kwargs)
+
+    async def post(self, *args, **kwargs):
+        return await self.request_logger(self.client.post, *args, **kwargs)
+
+    async def options(self, *args, **kwargs):
+        return await self.request_logger(self.client.options, *args, **kwargs)
+
+    async def request_logger(self, function: Callable, *args, **kwargs):
+        response = await function(*args, **kwargs)
+        if response.is_error:
+            logger.error(
+                f"{self.__class__.__name__} returned an error HTTP code: {response.status_code}"
+            )
+
+        return response
 
     async def get_csrf_token(self, url: str, pattern):
         response = await self.get(url)
